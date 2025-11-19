@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="AppWebiatech - Solusi digital untuk aplikasi Android dan Website. Download ZikirNur sekarang.">
     <title>AppWebiatech</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,6 +36,331 @@
         body {
             background: linear-gradient(135deg, var(--navy-dark), var(--navy-light));
             background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* --- PERFORMANCE OPTIMIZED ORBS --- */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.3;
+            transform: translate3d(0, 0, 0); 
+            will-change: transform; 
+            animation: float 15s infinite ease-in-out;
+        }
+        .orb-1 { width: 300px; height: 300px; background: var(--lime); top: -50px; left: -50px; }
+        .orb-2 { width: 400px; height: 400px; background: var(--cyan); bottom: -100px; right: -100px; animation-delay: 2s;}
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            background: rgba(5, 22, 38, 0.9);
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.3rem; font-weight: 700; color: white;
+            letter-spacing: 1px; display: flex; align-items: center; gap: 10px;
+        }
+        .logo img {
+            height: 35px; width: 35px; object-fit: cover; border-radius: 50%; border: 1px solid var(--lime);
+        }
+        .logo span { color: var(--lime); }
+
+        .right-nav { display: flex; align-items: center; gap: 20px; }
+        .desktop-clock { text-align: right; display: block; }
+        .desktop-clock .time { font-size: 1.1rem; font-weight: bold; color: var(--lime); }
+        .desktop-clock .date { font-size: 0.8rem; color: #aaa; }
+
+        .burger-menu {
+            font-size: 1.5rem; cursor: pointer; color: white; z-index: 1002;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.1); border-radius: 50%; transition: 0.3s;
+        }
+
+        /* --- MENU OVERLAY --- */
+        .nav-overlay {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: var(--overlay-bg); 
+            z-index: 1001; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: transform 0.4s ease-in-out;
+            will-change: transform;
+        }
+        .nav-overlay.active { transform: translateX(-100%); right: 0; }
+
+        .mobile-clock-container {
+            text-align: center; margin-bottom: 30px; padding: 20px;
+            border: 1px solid var(--lime); border-radius: 15px;
+            background: rgba(164, 214, 57, 0.05); display: none;
+        }
+        .mobile-clock-container .time { font-size: 2rem; font-weight: 700; color: var(--lime); }
+        .mobile-clock-container .date { font-size: 0.9rem; color: #ccc; }
+
+        .nav-links { list-style: none; text-align: center; }
+        .nav-links li { margin: 20px 0; }
+        .nav-links a { text-decoration: none; color: white; font-size: 1.5rem; font-weight: 700; transition: 0.3s; }
+        .nav-links a:hover { color: var(--lime); }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 80px 20px; min-height: 100vh; width: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        #home { text-align: center; padding-top: 120px; }
+        .hero-text h1 {
+            font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2;
+            background: linear-gradient(to right, #fff, var(--lime));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        .btn-action {
+            padding: 12px 35px; background: var(--lime); color: #051626;
+            font-weight: bold; border-radius: 50px; text-decoration: none;
+            display: inline-block; transition: 0.3s;
+        }
+        .btn-action:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--lime); }
+
+        /* --- CARDS (OPTIMIZED) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; width: 100%; max-width: 1200px; padding: 10px;
+        }
+        .card-wrap { perspective: 1000px; height: 500px; }
+        .card {
+            width: 100%; height: 100%;
+            background: rgba(5, 22, 38, 0.6); 
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(164, 214, 57, 0.3);
+            border-radius: 20px; padding: 25px;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            transition: transform 0.1s; transform-style: preserve-3d;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .card-content { transform: translateZ(50px); text-align: center; width: 100%; }
+        
+        .app-icon {
+            width: 90px; height: 90px;
+            background: linear-gradient(135deg, var(--navy-light), var(--cyan));
+            border-radius: 22px; margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        
+        .app-icon img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .btn-dl {
+            display: block; width: 100%; padding: 10px; margin-bottom: 8px;
+            border-radius: 8px; text-decoration: none; font-weight: bold;
+            text-align: center; font-size: 0.9rem; transition: 0.3s;
+        }
+        .btn-dl:hover { filter: brightness(1.2); }
+        .playstore { border: 1px solid var(--cyan); color: var(--cyan); }
+        .mediafire { border: 1px solid var(--orange); color: var(--orange); }
+
+        .contact-wrapper { display: flex; flex-wrap: wrap; gap: 30px; width: 100%; max-width: 1000px; }
+        .glass-panel {
+            flex: 1 1 300px; background: rgba(5, 22, 38, 0.6);
+            border: 1px solid var(--glass-border); padding: 30px; border-radius: 20px;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 12px; background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white;
+            outline: none;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--lime);
+        }
+        
+        footer { text-align: center; padding: 30px 20px; color: #666; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 768px) {
+            .orb { display: none; } 
+            .navbar, .card, .glass-panel {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: rgba(5, 22, 38, 0.95) !important;
+                box-shadow: none !important;
+            }
+            .card-wrap { height: auto; margin-bottom: 20px; perspective: none; }
+            .card { height: auto; transform: none !important; padding: 30px 20px; }
+            .card-content { transform: none; }
+            .desktop-clock { display: none; }
+            .mobile-clock-container { display: block; }
+            .navbar { padding: 15px 20px; }
+            section { padding: 60px 20px; }
+            .nav-overlay { 
+                transform: translateX(100%); right: auto; left: 0; 
+                background: var(--navy-dark);
+            }
+            .nav-overlay.active { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div> 
+    <div class="orb orb-2"></div> 
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="appwebiatecth.jpg" alt="Logo">
+            App<span>Webia</span>Tech
+        </div>
+        <div class="right-nav">
+            <div class="desktop-clock">
+                <div class="time time-target">00:00:00</div>
+                <div class="date date-target">Senin, 1 Jan 2024</div>
+            </div>
+            <div class="burger-menu" onclick="toggleMenu()">
+                <i class="fas fa-bars" id="burgerIcon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="nav-overlay" id="navOverlay">
+        <div class="mobile-clock-container">
+            <div class="time time-target">00:00:00</div>
+            <div class="date date-target">Senin, 1 Jan</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#karya" onclick="toggleMenu()">Karya Aplikasi</a></li>
+            <li><a href="#kontak" onclick="toggleMenu()">Hubungi Kami</a></li>
+            <li><a href="#saran" onclick="toggleMenu()">Saran & Masukkan</a></li>
+        </ul>
+    </div>
+
+    <section id="home">
+        <div class="hero-text">
+            <h1>SMART DIGITAL SOLUTIONS</h1>
+            <p style="color:#aaa; margin-bottom:20px;">Membangun Aplikasi & Website yang Menginspirasi.</p>
+            <a href="#karya" class="btn-action">Lihat Portfolio</a>
+        </div>
+    </section>
+
+    <section id="karya">
+        <h2 style="font-size:1.8rem; margin-bottom:40px; color:white; border-bottom:2px solid var(--lime); display:inline-block;">Applications</h2>
+        <div class="portfolio-grid">
+            
+            <div class="card-wrap">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="app-icon">
+                            <img src="ZikirNur.jpg" alt="Logo ZikirNur">
+                        </div>
+                        <h3 style="color:var(--lime); margin-bottom:10px;">ZikirNur</h3>
+                        <p style="font-size:0.9rem; color:#ccc; margin-bottom:20px;">Aplikasi islami lengkap dengan notifikasi Adzan, Notifikasi Islami Harian, Dzikir Ba'da Sholat, Tasbih Digital, Arah Kiblat, Tata Cara Sholat, Do'a Para Nabi, & Al-Qur'an.</p>
+                    </div>
+                    <div style="width:100%">
+                        <a href="#" class="btn-dl playstore"><i class="fab fa-google-play"></i> PlayStore (Akan Hadir)</a>
+                        <a href="https://www.mediafire.com/file/0s25iv3t33ybhx9/ZikurNur-app-release.apk/file" class="btn-dl mediafire"><i class="fas fa-fire"></i> MediaFire</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="kontak">
+        <div class="contact-wrapper">
+            <div class="glass-panel">
+                <h3 style="color:var(--lime); margin-bottom:20px;">Hubungi Kami</h3>
+                
+                <div style="display:flex; align-items:center; margin-bottom:20px; gap:15px;">
+                    <i class="fab fa-whatsapp" style="font-size:1.8rem; color:#25D366;"></i>
+                    <div>
+                        <div style="font-size:0.8rem; color:#888;">WhatsApp</div>
+                        <div style="font-size:1rem;">+62 812-3456-7890</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center; margin-bottom:20px; gap:15px;">
+                    <i class="far fa-envelope" style="font-size:1.8rem; color:var(--orange);"></i>
+                    <div>
+                        <div style="font-size:0.8rem; color:#888;">Email</div>
+                        <div style="font-size:1rem;">appwebiatech@gmail.com</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="glass-panel" id="saran">
+                <h3 style="color:var(--lime); margin-bottom:20px;">Saran</h3>
+                <form>
+                    <div class="input-group" style="margin-bottom:15px;">
+                        <input type="text" placeholder="Nama Anda">
+                    </div>
+                    <div class="input-group" style="margin-bottom:15px;">
+                        <textarea rows="3" placeholder="Pesan..."></textarea>
+                    </div>
+                    <button class="btn-action" style="width:100%; border:none; cursor:pointer;">Kirim</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>&copy; 2025 AppWebiatech - All Right Reserved.</footer>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const t = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false }).replace(/\./g, ':');
+            const d = now.toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'short' });
+            document.querySelectorAll('.time-target').forEach(e => e.innerText = t);
+            document.querySelectorAll('.date-target').forEach(e => e.innerText = d);
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        function toggleMenu() {
+            const o = document.getElementById('navOverlay');
+            const i = document.getElementById('burgerIcon');
+            o.classList.toggle('active');
+            i.classList.toggle('fa-times'); i.classList.toggle('fa-bars');
+        }
+
+        // EFEK 3D CARD (Desktop Only)
+        if (window.innerWidth > 1024) {
+            document.querySelectorAll('.card-wrap').forEach(w => {
+                const c = w.querySelector('.card');
+                w.addEventListener('mousemove', (e) => {
+                    const r = w.getBoundingClientRect();
+                    const x = ((e.clientX - r.left) / r.width - 0.5) * 20;
+                    const y = ((e.clientY - r.top) / r.height - 0.5) * -20;
+                    
+                    // PERBAIKAN: Menggunakan Backticks (`) bukan petik (')
+                    c.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+                });
+            
+                w.addEventListener('mouseleave', () => {
+                    c.style.transform = 'rotateX(0) rotateY(0)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>            background-attachment: fixed;
             color: white;
             min-height: 100vh;
         }
@@ -354,3 +680,4 @@
     </script>
 </body>
         </html>
+
