@@ -16,6 +16,7 @@
             --navy-light: #0a2540;
             --orange: #ff7b00;
             --gold: #ffd700;
+            --red-error: #ff4d4d; /* Warna Error Baru */
             --glass-border: rgba(255, 255, 255, 0.1);
             --overlay-bg: rgba(5, 22, 38, 0.98);
         }
@@ -192,6 +193,7 @@
             border: 1px solid rgba(255,255,255,0.2);
             background: rgba(0,0,0,0.3); color: white;
             font-size: 0.85rem; outline: none; text-align: center;
+            transition: all 0.3s; 
         }
         .promo-input:focus { border-color: var(--gold); }
         .promo-btn {
@@ -203,7 +205,31 @@
         .promo-btn:hover { background: var(--lime); color: black; border-color: var(--lime); }
         .hidden { display: none !important; }
 
-        /* --- STYLE KHUSUS COMING SOON (BARU) --- */
+        /* --- ERROR MESSAGE CUSTOM --- */
+        .error-msg {
+            color: var(--red-error);
+            font-size: 0.75rem;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none; /* Default Hidden */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Animasi Shake untuk input salah */
+        .shake { animation: shake 0.5s; }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* --- STYLE KHUSUS COMING SOON --- */
         .roadmap-grid {
             display: flex; flex-wrap: wrap; gap: 20px; width: 100%; max-width: 1000px;
         }
@@ -291,7 +317,8 @@
         <ul class="nav-links">
             <li><a href="#home" onclick="toggleMenu()">Home</a></li>
             <li><a href="#karya" onclick="toggleMenu()">Project Application</a></li>
-            <li><a href="#upcoming" onclick="toggleMenu()">Coming Soon</a></li> <li><a href="#kontak" onclick="toggleMenu()">Contact Us</a></li>
+            <li><a href="#upcoming" onclick="toggleMenu()">Coming Soon</a></li>
+            <li><a href="#kontak" onclick="toggleMenu()">Contact Us</a></li>
             <li><a href="#saran" onclick="toggleMenu()">Suggestions & Feedback</a></li>
         </ul>
     </div>
@@ -352,7 +379,7 @@
                         
                         <h3 style="color:var(--gold); margin-bottom:10px;">Wifi Monitor Pro ID</h3>
                         <p style="font-size:0.9rem; color:#ccc; margin-bottom:20px;">
-                            Pantau dan amankan jaringan WiFi Anda secara real-time. Fitur Premium meliputi: Deteksi Pencuri WiFi, Mengetahuai sandi secara halal, Analisis Sinyal Detail, dan Pengalaman Bebas Iklan.
+                            Pantau dan amankan jaringan WiFi Anda secara real-time. Fitur Premium meliputi: Deteksi Pencuri WiFi, Analisis Sinyal Detail, dan Pengalaman Bebas Iklan.
                         </p>
                     </div>
                     
@@ -367,6 +394,7 @@
                                     <input type="text" id="promoInput" class="promo-input" placeholder="Masukkan Kode">
                                     <button onclick="checkPromo()" class="promo-btn">Cek</button>
                                 </div>
+                                <div id="errorMsg" class="error-msg"></div>
                             </div>
                         </div>
 
@@ -506,17 +534,45 @@
             });
         }
 
-        // --- 4. LOGIKA KODE PROMO ---
+        // --- 4. LOGIKA KODE PROMO (TANPA ALERT POPUP) ---
         function checkPromo() {
-            const KODE_RAHASIA = "APPGRATIS"; 
-            const inputUser = document.getElementById('promoInput').value;
+            // KODE RAHASIA
+            const KODE_RAHASIA = "APPGRATIS211@#$&&93812828388388828377888182888388219838383883838282828282828838282828282828833792938382882"; 
+            
+            const inputField = document.getElementById('promoInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const inputUser = inputField.value;
             
             if(inputUser === KODE_RAHASIA) {
+                // KODE BENAR
                 document.getElementById('buy-section').classList.add('hidden'); 
                 document.getElementById('download-section').classList.remove('hidden'); 
+                errorMsg.style.display = "none"; // Sembunyikan pesan error jika sebelumnya muncul
             } else {
-                alert("Kode Salah! Silakan coba lagi atau beli via WhatsApp.");
-                document.getElementById('promoInput').value = ""; 
+                // KODE SALAH (CUSTOM)
+                
+                // 1. Tampilkan Pesan di bawah input (bukan alert)
+                errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Kode Salah! Silakan coba lagi atau beli via WhatsApp.';
+                errorMsg.style.display = "block";
+                
+                // 2. Kosongkan Input
+                inputField.value = ""; 
+
+                // 3. Efek Visual Merah
+                inputField.style.borderColor = "var(--red-error)";
+                inputField.style.background = "rgba(255, 77, 77, 0.1)";
+                
+                // 4. Efek Shake (Getar)
+                inputField.classList.add('shake');
+                
+                // Hilangkan efek merah dan getar setelah beberapa saat
+                setTimeout(() => {
+                    inputField.style.borderColor = "rgba(255,255,255,0.2)";
+                    inputField.style.background = "rgba(0,0,0,0.3)";
+                    inputField.classList.remove('shake');
+                    // Opsional: Hilangkan pesan error setelah 3 detik
+                    // errorMsg.style.display = "none"; 
+                }, 3000);
             }
         }
 
@@ -531,4 +587,4 @@
         }
     </script>
 </body>
-                                                                                                                                  </html>
+</html>
