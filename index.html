@@ -16,7 +16,7 @@
             --navy-light: #0a2540;
             --orange: #ff7b00;
             --gold: #ffd700;
-            --red-error: #ff4d4d; /* Warna Error Baru */
+            --red-error: #ff4d4d;
             --glass-border: rgba(255, 255, 255, 0.1);
             --overlay-bg: rgba(5, 22, 38, 0.98);
         }
@@ -115,12 +115,30 @@
         }
 
         #home { text-align: center; padding-top: 120px; }
+        
+        /* === EFEK LAMPU BERJALAN (UPDATED) === */
         .hero-text h1 {
-            font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2;
-            background: linear-gradient(to right, #fff, var(--lime));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: clamp(2rem, 5vw, 4rem); 
+            line-height: 1.2;
             margin-bottom: 15px;
+            font-weight: 800;
+            
+            /* Gradient Warna Warni: Putih -> Lime -> Cyan -> Putih */
+            background: linear-gradient(90deg, #ffffff, #a4d639, #00b4d8, #ffffff);
+            background-size: 300%; /* Ukuran background diperbesar agar bisa jalan */
+            
+            -webkit-background-clip: text; /* Memotong background sesuai bentuk teks */
+            -webkit-text-fill-color: transparent; /* Membuat teks transparan agar background terlihat */
+            
+            animation: shine 4s linear infinite; /* Animasi berjalan */
         }
+
+        @keyframes shine {
+            0% { background-position: 0%; }
+            100% { background-position: 100%; }
+        }
+        /* ======================================= */
+
         .btn-action {
             padding: 12px 35px; background: var(--lime); color: #051626;
             font-weight: bold; border-radius: 50px; text-decoration: none;
@@ -212,14 +230,13 @@
             margin-top: 8px;
             text-align: center;
             font-weight: bold;
-            display: none; /* Default Hidden */
+            display: none;
             animation: fadeIn 0.3s ease-in-out;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Animasi Shake untuk input salah */
         .shake { animation: shake 0.5s; }
         @keyframes shake {
             0% { transform: translateX(0); }
@@ -534,7 +551,7 @@
             });
         }
 
-        // --- 4. LOGIKA KODE PROMO (TANPA ALERT POPUP) ---
+        // --- 4. LOGIKA KODE PROMO ---
         function checkPromo() {
             // KODE RAHASIA
             const KODE_RAHASIA = "APPGRATIS211@#$&&93812828388388828377888182888388219838383883838282828282828838282828282828833792938382882"; 
@@ -547,31 +564,21 @@
                 // KODE BENAR
                 document.getElementById('buy-section').classList.add('hidden'); 
                 document.getElementById('download-section').classList.remove('hidden'); 
-                errorMsg.style.display = "none"; // Sembunyikan pesan error jika sebelumnya muncul
+                errorMsg.style.display = "none"; 
             } else {
                 // KODE SALAH (CUSTOM)
-                
-                // 1. Tampilkan Pesan di bawah input (bukan alert)
                 errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Kode Salah! Silakan coba lagi atau beli via WhatsApp.';
                 errorMsg.style.display = "block";
                 
-                // 2. Kosongkan Input
                 inputField.value = ""; 
-
-                // 3. Efek Visual Merah
                 inputField.style.borderColor = "var(--red-error)";
                 inputField.style.background = "rgba(255, 77, 77, 0.1)";
-                
-                // 4. Efek Shake (Getar)
                 inputField.classList.add('shake');
                 
-                // Hilangkan efek merah dan getar setelah beberapa saat
                 setTimeout(() => {
                     inputField.style.borderColor = "rgba(255,255,255,0.2)";
                     inputField.style.background = "rgba(0,0,0,0.3)";
                     inputField.classList.remove('shake');
-                    // Opsional: Hilangkan pesan error setelah 3 detik
-                    // errorMsg.style.display = "none"; 
                 }, 3000);
             }
         }
