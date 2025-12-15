@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="AppWebiatech - Solusi digital untuk aplikasi Android dan Website.">
+    
+    <meta property="og:title" content="AppWebiatech - Solusi Digital">
+    <meta property="og:description" content="Download aplikasi ZikirNur, KasirPro, dan solusi digital lainnya.">
+    <meta property="og:image" content="appwebiatecth.jpg"> <meta property="og:type" content="website">
+
     <title>AppWebiatech</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -116,28 +121,23 @@
 
         #home { text-align: center; padding-top: 120px; }
         
-        /* === EFEK LAMPU BERJALAN (UPDATED) === */
+        /* === EFEK LAMPU BERJALAN === */
         .hero-text h1 {
             font-size: clamp(2rem, 5vw, 4rem); 
             line-height: 1.2;
             margin-bottom: 15px;
             font-weight: 800;
-            
-            /* Gradient Warna Warni: Putih -> Lime -> Cyan -> Putih */
             background: linear-gradient(90deg, #ffffff, #a4d639, #00b4d8, #ffffff);
-            background-size: 300%; /* Ukuran background diperbesar agar bisa jalan */
-            
-            -webkit-background-clip: text; /* Memotong background sesuai bentuk teks */
-            -webkit-text-fill-color: transparent; /* Membuat teks transparan agar background terlihat */
-            
-            animation: shine 4s linear infinite; /* Animasi berjalan */
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
         }
 
         @keyframes shine {
             0% { background-position: 0%; }
             100% { background-position: 100%; }
         }
-        /* ======================================= */
 
         .btn-action {
             padding: 12px 35px; background: var(--lime); color: #051626;
@@ -212,6 +212,7 @@
             background: rgba(0,0,0,0.3); color: white;
             font-size: 0.85rem; outline: none; text-align: center;
             transition: all 0.3s; 
+            text-transform: uppercase; /* INPUT OTOMATIS BESAR */
         }
         .promo-input:focus { border-color: var(--gold); }
         .promo-btn {
@@ -225,12 +226,8 @@
 
         /* --- ERROR MESSAGE CUSTOM --- */
         .error-msg {
-            color: var(--red-error);
-            font-size: 0.75rem;
-            margin-top: 8px;
-            text-align: center;
-            font-weight: bold;
-            display: none;
+            color: var(--red-error); font-size: 0.75rem; margin-top: 8px;
+            text-align: center; font-weight: bold; display: none;
             animation: fadeIn 0.3s ease-in-out;
         }
         @keyframes fadeIn {
@@ -246,7 +243,7 @@
             100% { transform: translateX(0); }
         }
 
-        /* --- STYLE KHUSUS COMING SOON --- */
+        /* --- STYLE ROADMAP & ANIMASI PROGRESS BAR --- */
         .roadmap-grid {
             display: flex; flex-wrap: wrap; gap: 20px; width: 100%; max-width: 1000px;
         }
@@ -268,9 +265,15 @@
         }
         .progress-bar {
             height: 100%; background: var(--lime);
-            border-radius: 5px; width: 0%;
+            border-radius: 5px; width: 0%; /* Mulai dari 0 untuk animasi */
             box-shadow: 0 0 10px var(--lime);
-            transition: width 1s ease-in-out;
+            
+            /* ANIMASI LOAD */
+            animation: loadProgress 2s ease-out forwards;
+        }
+
+        @keyframes loadProgress {
+            to { width: var(--target); }
         }
 
         .contact-wrapper { display: flex; flex-wrap: wrap; gap: 30px; width: 100%; max-width: 1000px; }
@@ -408,7 +411,7 @@
                             <div class="promo-area">
                                 <div style="font-size:0.7rem; color:#aaa; margin-bottom:5px;">Punya Kode Voucher/Install Gratis?</div>
                                 <div class="promo-flex">
-                                    <input type="text" id="promoInput" class="promo-input" placeholder="Masukkan Kode">
+                                    <input type="text" id="promoInput" class="promo-input" placeholder="KODE PROMO">
                                     <button onclick="checkPromo()" class="promo-btn">Cek</button>
                                 </div>
                                 <div id="errorMsg" class="error-msg"></div>
@@ -452,7 +455,7 @@
                     <span style="color:white;">80%</span>
                 </div>
                 <div class="progress-container">
-                    <div class="progress-bar" style="width: 80%;"></div>
+                    <div class="progress-bar" style="--target: 80%;"></div>
                 </div>
             </div>
 
@@ -473,7 +476,7 @@
                     <span style="color:white;">90%</span>
                 </div>
                 <div class="progress-container">
-                    <div class="progress-bar" style="width: 90%; background: var(--orange); box-shadow: 0 0 10px var(--orange);"></div>
+                    <div class="progress-bar" style="--target: 90%; background: var(--orange); box-shadow: 0 0 10px var(--orange);"></div>
                 </div>
             </div>
 
@@ -551,23 +554,24 @@
             });
         }
 
-        // --- 4. LOGIKA KODE PROMO ---
+        // --- 4. LOGIKA KODE PROMO (DIPERBAIKI) ---
         function checkPromo() {
-            // KODE RAHASIA
+            // Ubah kode rahasia di sini
             const KODE_RAHASIA = "APPGRATIS211@#$&&9381282838838882837788818288838821983838388383828282828282883828282828282883379293838288299999999993838388282818199293938938392929298373838288181818677777777888483883828818181818188181828828373838383883838383848484874737372882828282882828282828288282828377447747484838282828929292982838383828828282818818182"; 
             
             const inputField = document.getElementById('promoInput');
             const errorMsg = document.getElementById('errorMsg');
             const inputUser = inputField.value;
             
-            if(inputUser === KODE_RAHASIA) {
+            // Menggunakan .toUpperCase() agar user bisa input huruf kecil/besar bebas
+            if(inputUser.toUpperCase() === KODE_RAHASIA) {
                 // KODE BENAR
                 document.getElementById('buy-section').classList.add('hidden'); 
                 document.getElementById('download-section').classList.remove('hidden'); 
                 errorMsg.style.display = "none"; 
             } else {
-                // KODE SALAH (CUSTOM)
-                errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Kode Salah! Silakan coba lagi atau beli via WhatsApp.';
+                // KODE SALAH
+                errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Kode Salah! Silakan coba lagi.';
                 errorMsg.style.display = "block";
                 
                 inputField.value = ""; 
@@ -583,16 +587,14 @@
             }
         }
 
-        // --- 5. SECURITY ---
+        // --- 5. SECURITY (Anti Inspect) ---
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if(event.keyCode == 123) return false;
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-            if(e.ctrlKey && e.keyCode == 'C'.charCodeAt(0)) return false;
         }
     </script>
 </body>
-</html>
-
+                            </html>
